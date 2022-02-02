@@ -7,4 +7,5 @@ admin.initializeApp();
 //
 exports.getAllProducts = require("./utils/getAllProducts");
 exports.getProductById = require("./utils/getProductById");
-exports.addProduct = require("./utils/addProduct");
+exports.setProduct = require("./utils/setProduct");
+exports.deleteProductById = require("./utils/deleteProductById");
