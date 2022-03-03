@@ -14,11 +14,11 @@ const db = admin.firestore();
 
 module.exports = functions.https.onCall(async (data, context) => {
 
-    const snapshot = await db.collection("products").get()
-    const productData = snapshot.docs.map(doc => doc.data())
-    console.log(productData)
+    const snapshot = await db.collection("promotions").get()
+    const promotionData = snapshot.docs.map(doc => doc.data())
+    console.log(promotionData)
 
     functions.logger.info("Hello logs!", { structuredData: true });
-    return (productData);
+    return (promotionData);
 
 })

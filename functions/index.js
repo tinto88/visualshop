@@ -9,3 +9,10 @@ exports.getAllProducts = require("./utils/getAllProducts");
 exports.getProductById = require("./utils/getProductById");
 exports.setProduct = require("./utils/setProduct");
 exports.deleteProductById = require("./utils/deleteProductById");
+exports.deleteManyProducts = require("./utils/deleteManyProducts");
+
+
+exports.setPromotion = require("./utils/setPromotion");
+exports.deletePromotionById = require("./utils/deletePromotionById");
+exports.getAllPromotions = require("./utils/getAllPromotions");
+exports.getPromotionById = require("./utils/getPromotionById");
