@@ -7,7 +7,7 @@ admin.initializeApp();
 //
 exports.getAllProducts = require("./utils/getAllProducts");
 exports.getProductById = require("./utils/getProductById");
-exports.setProduct = require("./utils/setProduct");
+exports.setProduct = require("./utils/setProduct"); //Bug Create First Product
 exports.deleteProductById = require("./utils/deleteProductById");
 exports.deleteManyProducts = require("./utils/deleteManyProducts");
 
@@ -16,3 +16,7 @@ exports.setPromotion = require("./utils/setPromotion");
 exports.deletePromotionById = require("./utils/deletePromotionById");
 exports.getAllPromotions = require("./utils/getAllPromotions");
 exports.getPromotionById = require("./utils/getPromotionById");
+
+exports.topUp = require("./utils/topUp");
+exports.editProfile = require("./utils/editProfile");
+exports.makeOrder = require("./utils/makeOrder");

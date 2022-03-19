@@ -17,24 +17,32 @@ module.exports = functions.https.onRequest(async (request, response) => {
             response.status(400).send(validateData + " Required")
         }
         else if (body.id) {
-            /// Edit Product
-            await db.collection("promotions").doc(body.id).set(body)
+            /// Edit Promotion
+            const productsnapshot = await db.collection("products").doc(body.product_id).get()
+            const productData = productsnapshot.data()
+            const newPromotionBody = {
+                promotion_price: productData.price - (((body.discount_percentage) / 100) * productData.price),
+                product_stock: productData.stock,
+                ...body
+            }
+            await db.collection("promotions").doc(body.id).set(newPromotionBody)
                 .then(() => {
-                    response.status(201).send(body)
+                    response.status(201).send(newPromotionBody)
                 }).catch(e => {
                     response.send(e)
                 })
         } else {
-            /// Add Product
+            /// Add Promotion
             const snapshot = await db.collection("promotions").get()
             const promotionData = snapshot.docs.map(doc => Number(doc.id))
             promotionData.sort(function (a, b) { return b - a })
-            
+
             const productsnapshot = await db.collection("products").doc(body.product_id).get()
             const productData = productsnapshot.data()
             const promotionBody = {
                 id: zeroPad(promotionData[0] + 1, 3),
-                promotion_price: productData.price - (((body.discount_percentage)/100) * productData.price),
+                promotion_price: productData.price - (((body.discount_percentage) / 100) * productData.price),
+                product_stock: productData.stock,
                 ...body
             }
 
@@ -57,7 +65,11 @@ module.exports = functions.https.onRequest(async (request, response) => {
 });
 
 function zeroPad(num, count) {
-    var numZeropad = num + '';
+    let newNum = num
+    if (isNaN(newNum)) {
+        newNum = 1
+    }
+    var numZeropad = newNum + '';
     while (numZeropad.length < count) {
         numZeropad = "0" + numZeropad;
     }

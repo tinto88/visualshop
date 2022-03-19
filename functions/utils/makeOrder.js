@@ -4,30 +4,29 @@ const db = admin.firestore();
 
 module.exports = functions.https.onRequest(async (request, response) => {
     const body = request.body
-    const productRequestBody = ["name", "description", "price", "stock"]
+    const productRequestBody = ["total"]
 
     if (!body) {
         /// No body Sent
         response.status(400).send("Body Required")
     } else {
-        if (body.id) {
-            /// Edit Product
-            await db.collection("products").doc(body.id).update(body)
+        /// Validate Data
+        const validateData = validate(body, productRequestBody)
+        console.log(validateData)
+        if (validateData) {
+            response.status(400).send(validateData + " Required")
+        }
+        else if (body.id) {
+            /// Edit Order
+            await db.collection("orders").doc(body.id).set(body)
                 .then(() => {
                     response.status(201).send(body)
                 }).catch(e => {
                     response.send(e)
                 })
         } else {
-            /// Validate Data
-            const validateData = validate(body, productRequestBody)
-            console.log(validateData)
-            if (validateData) {
-                response.status(400).send(validateData + " Required")
-                return 
-            }
-            /// Add Product
-            const snapshot = await db.collection("products").get()
+            /// Add Order
+            const snapshot = await db.collection("orders").get()
             const productData = snapshot.docs.map(doc => Number(doc.id))
             productData.sort(function (a, b) { return b - a })
 
@@ -39,7 +38,7 @@ module.exports = functions.https.onRequest(async (request, response) => {
             console.log(productData)
             // response.send(productBody)
 
-            await db.collection("products").doc(productBody.id).set(productBody)
+            await db.collection("orders").doc(productBody.id).set(productBody)
                 .then(() => {
                     // response.json(body)
                     response.status(201).send(productBody)
@@ -55,11 +54,7 @@ module.exports = functions.https.onRequest(async (request, response) => {
 });
 
 function zeroPad(num, count) {
-    let newNum = num
-    if (isNaN(newNum)) {
-        newNum = 1
-    }
-    var numZeropad = newNum + '';
+    var numZeropad = num + '';
     while (numZeropad.length < count) {
         numZeropad = "0" + numZeropad;
     }
