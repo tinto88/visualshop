@@ -2,6 +2,7 @@
 const admin = require("firebase-admin");
 admin.initializeApp();
 
+
 // // Create and Deploy Your First Cloud Functions
 // // https://firebase.google.com/docs/functions/write-firebase-functions
 //
@@ -28,3 +29,5 @@ exports.getUser = require("./utils/getUser");
 
 exports.getMap = require("./utils/getMap");
 exports.editMap = require("./utils/editMap");
+
+exports.writeUser = require("./utils/writeUser");
