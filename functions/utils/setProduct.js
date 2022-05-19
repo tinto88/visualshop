@@ -33,6 +33,8 @@ module.exports = functions.https.onRequest(async (request, response) => {
 
             const productBody = {
                 id: zeroPad(productData[0] + 1, 3),
+                lastUpdated: admin.firestore.FieldValue.serverTimestamp(),
+                modelId: "",
                 ...body
             }
 

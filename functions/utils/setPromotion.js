@@ -23,6 +23,7 @@ module.exports = functions.https.onRequest(async (request, response) => {
             const newPromotionBody = {
                 promotion_price: productData.price - (((body.discount_percentage) / 100) * productData.price),
                 product_stock: productData.stock,
+                lastUpdated: admin.firestore.FieldValue.serverTimestamp(),
                 ...body
             }
             await db.collection("promotions").doc(body.id).set(newPromotionBody)
@@ -37,12 +38,15 @@ module.exports = functions.https.onRequest(async (request, response) => {
             const promotionData = snapshot.docs.map(doc => Number(doc.id))
             promotionData.sort(function (a, b) { return b - a })
 
+            console.log(admin.firestore.Timestamp.now());
+
             const productsnapshot = await db.collection("products").doc(body.product_id).get()
             const productData = productsnapshot.data()
             const promotionBody = {
                 id: zeroPad(promotionData[0] + 1, 3),
                 promotion_price: productData.price - (((body.discount_percentage) / 100) * productData.price),
                 product_stock: productData.stock,
+                lastUpdated: admin.firestore.FieldValue.serverTimestamp(),
                 ...body
             }
 

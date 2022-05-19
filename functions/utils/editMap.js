@@ -16,17 +16,14 @@ module.exports = functions.https.onRequest(async (request, response) => {
         if (validateData) {
             response.status(400).send(validateData + " Required")
         }
-        else if (body.Email) {
-            /// User Data
-            const userSnapshot = await db.collection("users").doc(body.Email).get()
-            const userData = userSnapshot.data()
-            /// Add Money
-            const money = userData.money
-            await db.collection("users").doc(body.Email).update({
-                money: money + body.money
-            })
-   
-            response.status(201).send(money+" was Added")
+        else if (body) {
+            /// Edit Map
+            await db.collection("map").doc("mapSelect").set(body)
+                .then(() => {
+                    response.status(201).send(body)
+                }).catch(e => {
+                    response.send(e)
+                })
         } 
         // else {
         //     /// Add Product
