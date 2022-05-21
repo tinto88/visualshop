@@ -39,8 +39,6 @@ module.exports = functions.https.onRequest(async (request, response) => {
             }
 
             console.log(productData)
-            // response.send(productBody)
-
             await db.collection("products").doc(productBody.id).set(productBody)
                 .then(() => {
                     // response.json(body)

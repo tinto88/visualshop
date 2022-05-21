@@ -4,8 +4,8 @@ const db = admin.firestore();
 
 module.exports = functions.https.onRequest(async (request, response) => {
     const body = request.body
-    const productRequestBody = []
-    console.log(body);
+    const productRequestBody = ["Email"]
+
     if (!body) {
         /// No body Sent
         response.status(400).send("Body Required")
@@ -17,8 +17,8 @@ module.exports = functions.https.onRequest(async (request, response) => {
             response.status(400).send(validateData + " Required")
             return
         }
-        console.log(body)
 
+         // Add User Data to Firestore 
         await db.collection("users").doc(body.Email).set(body)
             .then(() => {
                 response.status(201).send(body)

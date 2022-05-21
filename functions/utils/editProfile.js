@@ -25,31 +25,6 @@ module.exports = functions.https.onRequest(async (request, response) => {
                     response.send(e)
                 })
         } 
-        // else {
-        //     /// Add Product
-        //     const snapshot = await db.collection("products").get()
-        //     const productData = snapshot.docs.map(doc => Number(doc.id))
-        //     productData.sort(function (a, b) { return b - a })
-
-        //     const productBody = {
-        //         id: zeroPad(productData[0] + 1, 3),
-        //         ...body
-        //     }
-
-        //     console.log(productData)
-        //     // response.send(productBody)
-
-        //     await db.collection("products").doc(productBody.id).set(productBody)
-        //         .then(() => {
-        //             // response.json(body)
-        //             response.status(201).send(productBody)
-        //         }).catch(e => {
-        //             response.send(e)
-        //         })
-
-
-        // }
-
 
     }
 });

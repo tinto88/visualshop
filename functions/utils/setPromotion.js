@@ -12,7 +12,6 @@ module.exports = functions.https.onRequest(async (request, response) => {
     } else {
         /// Validate Data
         const validateData = validate(body, promotionRequestBody)
-        // console.log(validateData)
         if (validateData) {
             response.status(400).send(validateData + " Required")
         }
@@ -50,12 +49,8 @@ module.exports = functions.https.onRequest(async (request, response) => {
                 ...body
             }
 
-            // console.log(productData.data().price)
-            // response.send(promotionBody)
-
             await db.collection("promotions").doc(promotionBody.id).set(promotionBody)
                 .then(() => {
-                    // response.json(body)
                     response.status(201).send(promotionBody)
                 }).catch(e => {
                     response.send(e)
@@ -84,7 +79,6 @@ function validate(body, schema) {
     for (let i = 0; i < schema.length; i++) {
         const element = schema[i];
         if (!body[element]) {
-            // console.log(element, body[element], !body[element]);
             return element
         }
     }

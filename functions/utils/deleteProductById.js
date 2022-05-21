@@ -6,9 +6,6 @@ const { deletePromotionByProduct } = require("../_fn/deletePromotionByProduct")
 module.exports = functions.https.onRequest(async (request, response) => {
 
     const param = request.query
-    
-
-
     if (!param.id) {
         response.send(400)
     } else {
@@ -19,17 +16,6 @@ module.exports = functions.https.onRequest(async (request, response) => {
         }else{
             response.send(deleteProduct)
         }
-
-        // await DeletePromotion(param.id)
-        // await db.collection("products").doc(param.id).delete()
-        //     .then(() => {
-        //         response.status(200).send("Delete " + param.id + " Success")
-        //     }).catch(e => {
-        //         response.send(e)
-        //     })
-
-
-
     }
 
 

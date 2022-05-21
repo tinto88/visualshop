@@ -23,11 +23,9 @@ exports.editProfile = require("./utils/editProfile");
 exports.makeOrder = require("./utils/makeOrder");
 exports.buyProduct = require("./utils/buyProduct");
 
-// exports.buyProduct = require("./utils/uploadImg");
 
 exports.getUser = require("./utils/getUser");
-
+exports.writeUser = require("./utils/writeUser");
 exports.getMap = require("./utils/getMap");
 exports.editMap = require("./utils/editMap");
 
-exports.writeUser = require("./utils/writeUser");
