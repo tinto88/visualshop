@@ -42,7 +42,7 @@ module.exports = functions.https.onRequest(async (request, response) => {
             const productsnapshot = await db.collection("products").doc(body.product_id).get()
             const productData = productsnapshot.data()
             const promotionBody = {
-                id: zeroPad(promotionData[0] + 1, 3),
+                id: zeroPad(promotionData[0] + 1, 3) + "p",
                 promotion_price: productData.price - (((body.discount_percentage) / 100) * productData.price),
                 product_stock: productData.stock,
                 lastUpdated: admin.firestore.FieldValue.serverTimestamp(),

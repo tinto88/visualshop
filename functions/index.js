@@ -29,3 +29,6 @@ exports.writeUser = require("./utils/writeUser");
 exports.getMap = require("./utils/getMap");
 exports.editMap = require("./utils/editMap");
 
+exports.getAllOrders = require("./utils/getAllOrders");
+exports.getOrderById = require("./utils/getOrderById");
+

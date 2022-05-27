@@ -84,17 +84,17 @@ module.exports = functions.https.onRequest(async (request, response) => {
         const orderSnapshot = await db.collection("orders").get()
         const orderData = orderSnapshot.docs.map(doc => Number(doc.id))
         orderData.sort(function (a, b) { return b - a })
-
+        const date = Date(admin.firestore.FieldValue.serverTimestamp())
         const orderBody = {
             "id": zeroPad(orderData[0] + 1, 3),
-            "Address": "test",
+            "Address": userData.address,
             "total": totalInvoice.totalPrice,
             "purchase": true,
             "user": body.Email,
             "product": invoiceArray,
-            "lastUpdated": admin.firestore.FieldValue.serverTimestamp(),
+            "lastUpdated": date.toString(),
         }
-
+        console.log(date);
         await db.collection("orders").doc(orderBody.id).set(orderBody)
             .then(() => {
                 response.status(201).send(orderBody)
